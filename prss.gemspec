@@ -13,7 +13,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.name          = "prss"
   gem.require_paths = ["lib"]
-  gem.version       = Prss::VERSION
+  gem.version       = PRSS::VERSION
 
   gem.add_dependency 'nokogiri', '>= 1.5.0'
   gem.add_dependency 'typhoeus', '>= 0.3.2'
