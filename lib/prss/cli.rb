@@ -13,6 +13,9 @@ module PRSS
       output = Fetcher.new(@passkey).output
       links = Parser.new(output)
       downloaded = Downloader.new(links).download_to(@output_dir)
+
+      puts "Downloaded #{downloaded.count} files to #{@output_dir}."
+      puts "Files:", *downloaded unless downloaded.empty?
     end
   end
 end

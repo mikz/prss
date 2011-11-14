@@ -36,7 +36,7 @@ module PRSS
         file.write(response.body)
       end
 
-      file
+      filename
     end
 
   end
