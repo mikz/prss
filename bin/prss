@@ -9,4 +9,3 @@ else
     USAGE: prss passkey output_dir
   }
 end
-
