@@ -3,6 +3,8 @@ require 'pathname'
 
 module PRSS
   class Downloader
+    attr_reader :hydra
+
     def initialize(links)
       @links = links
       @hydra = Typhoeus::Hydra.new
@@ -20,10 +22,10 @@ module PRSS
           @files << save_file(response, output)
         end
 
-        @hydra.queue request
+        hydra.queue request
       end
 
-      @hydra.run
+      hydra.run
 
       @files
     end
