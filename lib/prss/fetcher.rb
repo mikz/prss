@@ -1,4 +1,5 @@
 require 'typhoeus'
+require 'uri'
 
 module PRSS
   class Fetcher
