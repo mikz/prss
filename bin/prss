@@ -1,11 +1,5 @@
 #!/usr/bin/env ruby
 
 require 'prss'
-case ARGV.size
-when 2
-  PRSS::CLI.new(*ARGV).run!
-else
-  puts %{
-    USAGE: prss passkey output_dir
-  }
-end
+
+PRSS::CLI.start

@@ -1,20 +1,26 @@
-require 'pathname'
+require 'thor'
 
 module PRSS
-  class CLI
-    def initialize passkey, output_dir
-      @passkey = passkey
-      @output_dir = Pathname.new(output_dir)
-      raise 'no passkey' unless passkey
-      raise 'no output dir' unless output_dir
+  class CLI < Thor
+
+
+    desc 'watch PASSKEY OUTPUT', 'run in loop in given interval'
+    method_option :interval, type: :numeric, default: 30, aliases: %w[-i]
+    def watch(passkey, output)
+      Downloader.verify!(output)
+      feed = Feed.new(passkey)
+      watcher = Watcher.new(feed)
+      watcher.start(options[:interval], output)
     end
 
-    def run!
-      output = Fetcher.new(@passkey).output
-      links = Parser.new(output)
-      downloaded = Downloader.new(links).download_to(@output_dir)
+    desc 'download PASSKEY OUTPUT', 'fetch feed once and quit'
+    def download(passkey, output)
+      Downloader.verify!(output)
 
-      puts "Downloaded #{downloaded.count} files to #{@output_dir}."
+      feed = Feed.new(passkey)
+      downloaded = feed.download_to(output_dir)
+
+      puts "Downloaded #{downloaded.count} files to #{output_dir}."
       puts "Files:", *downloaded unless downloaded.empty?
     end
   end

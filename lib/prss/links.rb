@@ -1,7 +1,7 @@
 require 'nokogiri'
 
 module PRSS
-  class Parser
+  class Links
     def initialize(xml)
       @xml = xml
     end
@@ -11,7 +11,9 @@ module PRSS
     end
 
     def links
-      channel.xpath('//item/link')
+      channel.xpath('//item/link').tap do |links|
+        puts "Found #{links.size} links"
+      end
     end
 
     def each(&block)
