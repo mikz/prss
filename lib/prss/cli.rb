@@ -18,9 +18,9 @@ module PRSS
       Downloader.verify!(output)
 
       feed = Feed.new(passkey)
-      downloaded = feed.download_to(output_dir)
+      downloaded = feed.download_to(output)
 
-      puts "Downloaded #{downloaded.count} files to #{output_dir}."
+      puts "Downloaded #{downloaded.count} files to #{output}."
       puts "Files:", *downloaded unless downloaded.empty?
     end
   end
