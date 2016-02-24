@@ -1,9 +1,10 @@
-require 'typhoeus'
+require 'net/http'
 require 'uri'
+require 'benchmark'
 
 module PRSS
   class Feed
-    PERSONAL_FEED_URL = "https://hdbits.org/rss/my"
+    PERSONAL_FEED_URL = ENV.fetch('PRSS_FEED_URL') { 'https://hdbits.org/rss/my'.freeze }
 
     attr_reader :uri
 
@@ -11,16 +12,21 @@ module PRSS
       #@passkey = passkey
       @uri = URI(PERSONAL_FEED_URL)
       @uri.query = "passkey=#{passkey}"
+      @uri.freeze
     end
 
     def response
-      Typhoeus::Request.get(@uri.to_s).tap do |response|
-        puts "Fetched #{@uri} in #{response.total_time}s"
+      response = nil
+      time = Benchmark.realtime do
+        response = Net::HTTP.get(@uri)
       end
+
+      puts "Fetched #{@uri} in #{time.round(2)}s"
+      response
     end
 
     def output
-      response.body
+      response
     end
 
     def links

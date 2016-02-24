@@ -1,24 +1,26 @@
 require 'nokogiri'
+require 'rexml/document'
+require 'uri'
 
 module PRSS
   class Links
     def initialize(xml)
-      @xml = xml
+      @xml = ::REXML::Document.new(xml)
     end
 
-    def channel
-      @channel ||= Nokogiri::XML.parse(@xml).xpath('//channel')
-    end
+    attr_reader :xml
 
     def links
-      channel.xpath('//item/link').tap do |links|
+      xml.elements.to_a('//item/link').tap do |links|
         puts "Found #{links.size} links"
       end
     end
 
-    def each(&block)
+    def each
+      return to_enum unless block_given?
+
       links.each do |link|
-        yield link.content
+        yield URI(link.text.strip)
       end
     end
 

@@ -15,8 +15,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = PRSS::VERSION
 
-  gem.add_dependency 'nokogiri', '~> 1.6.2'
-  gem.add_dependency 'typhoeus', '~> 0.6.9'
   gem.add_dependency 'thor', '~> 0.19.1'
 
   gem.add_development_dependency 'rspec', '~> 3.0'
