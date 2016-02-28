@@ -30,7 +30,8 @@ module PRSS
       return if file.exist?
 
       open(file, 'wb') do |file|
-        response.read_body(file)
+        body = response.body
+        file.write(body)
       end
 
       filename
