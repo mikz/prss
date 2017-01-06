@@ -7,7 +7,12 @@ module PRSS
     def start(interval, output)
       loop = Thread.new do
         loop do
-          @feed.download_to(output)
+          begin
+            @feed.download_to(output)
+          rescue PRSS::Links::InvalidXMLError
+            warn 'ignoring invalid xml'
+          end
+
           sleep(interval)
         end
       end

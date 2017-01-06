@@ -3,8 +3,12 @@ require 'uri'
 
 module PRSS
   class Links
+    class InvalidXMLError < StandardError; end
+
     def initialize(xml)
       @xml = ::REXML::Document.new(xml)
+    rescue REXML::ParseException
+      raise InvalidXMLError
     end
 
     attr_reader :xml
