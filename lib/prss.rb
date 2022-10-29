@@ -5,4 +5,9 @@ module PRSS
   autoload :Links, 'prss/links'
   autoload :VERSION, 'prss/version'
   autoload :Watcher, 'prss/watcher'
+
+
+  def self.load!
+    constants(false).each(&method(:const_get))
+  end
 end

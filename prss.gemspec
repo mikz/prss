@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.version       = PRSS::VERSION
 
   gem.add_dependency 'thor', '~> 0.19.1'
+  gem.add_dependency 'rexml'
 
   gem.add_development_dependency 'rspec', '~> 3.0'
 end
